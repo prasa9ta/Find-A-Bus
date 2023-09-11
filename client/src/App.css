@@ -1,38 +1,140 @@
-.App {
-  text-align: center;
+/* navbar */
+
+.navbar{
+  height: 100px;
+  width: 100vw;
+  margin: 0 auto;
+  color: brown;
+  background-color: rgb(227, 227, 222);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-items{
+  display: flex;
+  margin-right: 30px;
+}
+.nav-logo{
+  margin-left: 30px;
+}
+.nav-items a{text-decoration: none;
+  text-decoration: none;
+  color: blue;
+  font-weight: 600;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Error page */
+
+.error{
+  height:80vh;
+  width:100vw;
+  /* background-color: aqua; */
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.error-code{
+  position: absolute;
+  z-index: -1;
+  color: whitesmoke;
+  font-size: 5rem;
+}
+.error-para{
+  position: absolute;
+  font-weight: 800;
+  color: grey;
+}
+.error a{
+  margin-top: 200px;
+  text-decoration: none;
+  font-size: 1.3em;
+  font-weight: 600;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Home page */
+.home-container{
+  width: 80%;
+  margin: 10px auto;
+  margin-top: 10px;
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.home-search-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home-route-search{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.home-bus-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.home-search-button button{
+  width: 100%;
+  padding: 5px 9px 5px 9px;
+}
+
+/* Add js */
+
+.add-container{
+  width:80%;
+  margin: 5px auto;
+  padding: 20px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+}
+.add-bus-name-time{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 30px;
+}
+.add-bus-name-time input[type=text]{
+  width: 20%;
+}
+.add-bus-name-time span{
+  border: 1px solid rgb(197, 197, 192);
+  background-color: white;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+.add-bus{
+  padding-top: 20px;
+  display: flex;
+  column-gap: 200px;
+  justify-content: center;
+}
+.add-form form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
