@@ -10,7 +10,7 @@ const Navbar = () => {
             </div>
 
             <div className='nav-title'>
-                <h2>Yatra sukhad ho</h2>
+                <h2>Yatra Sukhad Hoi</h2>
             </div>
 
             <div className='nav-items'>

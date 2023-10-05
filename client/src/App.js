@@ -5,8 +5,10 @@ import Home from './components/Home'
 import Add from './components/Add'
 import Report from './components/Report'
 import Error from './components/Error'
-import Todo from './components/todoreact/todo'
+// import Todo from './components/todoreact/todo'
 import Signup from './components/Signup';
+
+
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
           <Route path='/report' element = { <Report/>} />
           <Route path='*' element = { <Error/>} />
           <Route path='/signup' element = { <Signup/>} />
-          <Route path='/todo' element = { <Todo/>} />
+          {/* <Route path='/todo' element = { <Todo/>} /> */}
         </Routes>
       </BrowserRouter>
     </>

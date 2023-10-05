@@ -110,31 +110,75 @@ input[type=text] {
   background-color: whitesmoke;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .add-bus-name-time{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  column-gap: 30px;
 }
-.add-bus-name-time input[type=text]{
-  width: 20%;
+.add-bus-name-time input{
+  width: 60%;
+  font-size: 1.3rem;
 }
-.add-bus-name-time span{
-  border: 1px solid rgb(197, 197, 192);
-  background-color: white;
-  padding: 12px 20px;
-  cursor: pointer;
-}
-.add-bus{
-  padding-top: 20px;
-  display: flex;
-  column-gap: 200px;
-  justify-content: center;
-}
-.add-form form{
+.timetable{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.routes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* position: relative; */
+}
+/* .routes-child{
+  display: inline-block;
+} */
+
+.stopages-with-time{
+  padding: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.routes input{
+  width: 60%;
+  font-size: 1.3rem;
+}
+.btn{
+  /* position: absolute; */
+  width: fit-content;
+  padding: 6px;
+  background-color: #ccc;
+  font-size: 0.9rem;
+  color: rgb(75, 76, 76);
+  border: 1px solid black;
+  cursor: pointer;
+}
+.add{
+  padding: 4px 6px;
+  height: fit-content;
+}
+.each-stop{
+  width: 100%;
+  display: flex;
+  justify-content:space-evenly;
+  align-items:center;
+}
+input[type=time] {
+  width: fit-content;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
 }
