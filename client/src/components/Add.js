@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 
 
 // const routes = [{}];
+var Bus;
 
 const Add = () => {
 
@@ -18,7 +19,17 @@ const Add = () => {
     // proceed 
 
     const proceed = ()=>{
-        setTougleButton(false);
+        if(!busName || !busNo){
+            alert("pleace fill Both the Fields.");
+            setTougleButton(true);
+        }else{
+            Bus = {
+                name:busName,
+                number:busNo
+            }
+
+            setTougleButton(false);
+        }
     }
 
 
@@ -39,6 +50,8 @@ const Add = () => {
             }
             setInputstopage([...stopage,newStopege]);
         }
+        setPlace("");
+        setPlaceTime("");
     }
    
     // console.log(stopage);
@@ -47,12 +60,13 @@ const Add = () => {
     // final submit
     const finalSubmit = ()=>{
 
-
-
-
+        Bus.route = stopage;
+        setBusName("");
+        setBusNo("");
         //fix tougleButton
         setTougleButton("true");
         console.log(tougleButton);
+        console.log(Bus);
     }
 
 
