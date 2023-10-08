@@ -23,12 +23,15 @@
   font-weight: 600;
 }
 
+
+
 /* Error page */
+
+
 
 .error{
   height:80vh;
   width:100vw;
-  /* background-color: aqua; */
   display: flex;
   position: relative;
   justify-content: center;
@@ -52,7 +55,12 @@
   font-weight: 600;
 }
 
+
+
 /* Home page */
+
+
+
 .home-container{
   width: 80%;
   margin: 10px auto;
@@ -79,8 +87,10 @@
 }
 
 .home-bus-list{
+  width: 40%;
   display: flex;
   flex-direction: column;
+  gap: 30px;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -101,7 +111,11 @@ input[type=text] {
   padding: 5px 9px 5px 9px;
 }
 
+
+
 /* Add js */
+
+
 
 .add-container{
   width:80%;
@@ -134,10 +148,6 @@ input[type=text] {
   gap: 20px;
   /* position: relative; */
 }
-/* .routes-child{
-  display: inline-block;
-} */
-
 .stopages-with-time{
   padding: 10px;
   margin-top: 40px;
@@ -167,10 +177,16 @@ input[type=text] {
   height: fit-content;
 }
 .each-stop{
+  font-size: 1.4rem;
   width: 100%;
   display: flex;
   justify-content:space-evenly;
   align-items:center;
+}
+.each-stop:hover{
+  background-color: rgb(0, 13, 75);
+  color: aliceblue;
+  cursor: pointer;
 }
 input[type=time] {
   width: fit-content;
@@ -180,5 +196,19 @@ input[type=time] {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+
+}
+
+
+/* BusList.js */
+
+.bus-list{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.bus-list-child{
+  display: flex;
+  gap: 10px;
 
 }

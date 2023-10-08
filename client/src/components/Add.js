@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 
 
 // const routes = [{}];
@@ -57,6 +57,16 @@ const Add = () => {
     // console.log(stopage);
 
 
+
+    // editStopage
+
+    const editStopage = (curElem)=>{
+        setPlace(curElem.place);
+        setPlaceTime(curElem.placeTime);
+
+    }
+
+
     // final submit
     const finalSubmit = ()=>{
 
@@ -66,8 +76,16 @@ const Add = () => {
         //fix tougleButton
         setTougleButton("true");
         console.log(tougleButton);
-        console.log(Bus);
     }
+
+
+    // adding to local storage
+
+     // adding to local storage
+
+  useEffect(()=>{
+    localStorage.setItem("route",JSON.stringify(stopage))
+  },[stopage]);
 
 
 
@@ -104,8 +122,9 @@ const Add = () => {
                         {
                         stopage.map((curElem)=>{
                             return(
-                                <div className="each-stop">
-                                <div> {curElem.place}</div><div>{curElem.placeTime}</div>
+                                <div className="each-stop" onClick={()=>{editStopage(curElem)}}>
+                                <span> {curElem.place}</span>
+                                <span>{curElem.placeTime}</span>
                             </div>
                             )
                         })
