@@ -1,10 +1,33 @@
 import React, { useState } from 'react'
+import Bus from '../Busses/Bus'
+import BusList from '../Busses/BusList';
 
 const Home = () => {
   
   const [source,setSource] = useState("");
   const [destination,setDestination] = useState("");
   
+  
+  const search=(elem)=>{
+    let count = 0;
+    let rut = elem.route;
+    let n =rut.length;
+
+    for(var v = 0;v<n;v++){
+      if(rut[v].place.toUpperCase()===source.toUpperCase()){
+        count = count+1;
+      }
+      else if(rut[v].place.toUpperCase()===destination.toUpperCase()){
+        count = count+1;
+      }
+    }
+    if(count === 2){
+      console.log(elem);
+      return elem;
+    }
+  }
+      
+  const results = Bus.filter((elem)=>search(elem));
 
   return (
     <>
@@ -25,7 +48,7 @@ const Home = () => {
           <div className='home-search-button'><button>Search</button></div>
         </div>
 
-        {/* < BusList results = {results}/> */}
+        < BusList results = {results}/>
       </div>
     </>
   )
