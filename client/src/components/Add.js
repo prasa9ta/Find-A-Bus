@@ -12,7 +12,7 @@ const Add = () => {
     const [busNo,setBusNo] = useState("");
     const [stopage, setInputstopage] = useState([]);
     const [place,setPlace] = useState("");
-    const [placeTime, setPlaceTime] = useState("");
+    const [time, setTime] = useState("");
     const [tougleButton,setTougleButton] = useState(true);
 
 
@@ -37,21 +37,21 @@ const Add = () => {
     // add a route
 
     const addRoute = ()=>{
-        if(!place || !placeTime){ // one of the field is empty
+        if(!place || !time){ // one of the field is empty
             alert("Please enter both Stopage and Time !");
         }
-        else if(stopage.find((elem)=>{ return elem.placeTime===placeTime})){ // time repeating is there 
+        else if(stopage.find((elem)=>{ return elem.time===time})){ // time repeating is there 
             alert("Bus can't be at two places at a same time ");
         }
         else{ //times are unique
             const newStopege = {
                 place: place,
-                placeTime : placeTime
+                time : time
             }
             setInputstopage([...stopage,newStopege]);
         }
         setPlace("");
-        setPlaceTime("");
+        setTime("");
     }
    
     // console.log(stopage);
@@ -62,32 +62,54 @@ const Add = () => {
 
     const editStopage = (curElem)=>{
         setPlace(curElem.place);
-        setPlaceTime(curElem.placeTime);
+        setTime(curElem.time);
 
     }
 
 
     // final submit
-    const finalSubmit = ()=>{
+    const finalSubmit = async(e)=>{
 
         Bus.route = stopage;
+        console.log(stopage);
         setBusName("");
         setBusNo("");
         //fix tougleButton
         setTougleButton("true");
         console.log(tougleButton);
+
+
+        e.preventDefault();
+        const res = await fetch('/addbus',{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            name:busName,number:busNo,route:stopage
+          })
+        });
+
+
+        const result = await res.json();
+        
+        
+        if(result.status === 422 || !result){
+          window.alert("cant do that");
+          console.log("cant do that");
+        }else{
+            console.log("added successfully");
+
+        }
     }
 
-
     // adding to local storage
-
-     // adding to local storage
 
   useEffect(()=>{
     localStorage.setItem("route",JSON.stringify(stopage))
   },[stopage]);
 
-
+// 
 
     return( 
         <>  
@@ -112,7 +134,7 @@ const Add = () => {
                         </div>
                         <div className='routes-child'>
                             <label htmlFor="stopage-time">Time : </label>
-                            <input type="time" name='stopage-time' id='stopage-time' value={placeTime} onChange={(event) => setPlaceTime(event.target.value)}/>
+                            <input type="time" name='stopage-time' id='stopage-time' value={time} onChange={(event) => setTime(event.target.value)}/>
                         </div>
                         <button className='btn add routes-child' onClick={addRoute}>+</button>
                     </div>
@@ -122,9 +144,9 @@ const Add = () => {
                         {
                         stopage.map((curElem)=>{
                             return(
-                                <div className="each-stop" onClick={()=>{editStopage(curElem)}}>
-                                <span> {curElem.place}</span>
-                                <span>{curElem.placeTime}</span>
+                                <div className="each-stop" id='each-stop' onClick={()=>{editStopage(curElem)}}>
+                                    <span> {curElem.place}</span>
+                                    <span>{curElem.time}</span>
                             </div>
                             )
                         })

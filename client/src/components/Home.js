@@ -1,9 +1,44 @@
 import React, { useState } from 'react'
+import BusList from '../Busses/BusList';
+// import BusList from './Bus-List';
 
 const Home = () => {
   
   const [source,setSource] = useState("");
   const [destination,setDestination] = useState("");
+  const [tougleButton,setTougleButton] = useState(true);
+  const [results,setResults] = useState([]);
+  
+  const PostData = async(e)=>{
+    e.preventDefault();
+    const res = await fetch('/search',{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        source,destination
+      })
+    });
+    
+    const result = await res.json();
+    
+    if(result.busses)
+    setResults([...result.busses]);
+    
+    
+    if(result.status === 422 || !result){
+      window.alert("No Bus found");
+      console.log("No bus found");
+    }else{
+      // console.log(results);
+      
+      setTougleButton(false);
+      results.map((bus)=>console.log(bus.name));
+    }
+
+  }
+
   
 
   return (
@@ -22,10 +57,14 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='home-search-button'><button>Search</button></div>
+          <div className='home-search-button'><button onClick={PostData}>Search</button></div>
         </div>
-
-        {/* < BusList results = {results}/> */}
+        {
+        tougleButton?
+        <div><h3>List of Busses</h3></div>
+        :
+        < BusList results = {results} source = {source} />
+        }
       </div>
     </>
   )

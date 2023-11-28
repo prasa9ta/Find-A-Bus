@@ -28,6 +28,12 @@ const Home = () => {
   }
       
   const results = Bus.filter((elem)=>search(elem));
+  console.log("/////////");
+  console.log(results);
+  console.log("......");
+  console.log(Bus)
+
+
 
   return (
     <>
@@ -45,10 +51,10 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='home-search-button'><button>Search</button></div>
+          <div className='home-search-button'><button >Search</button></div>
         </div>
 
-        < BusList results = {results}/>
+        < BusList results = {results} destination = {destination}/>
       </div>
     </>
   )

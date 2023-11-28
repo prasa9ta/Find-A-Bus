@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes,Route} from 'react-router-dom'
 import Navbar from './components/Navbar'
+// import Home from './components/home(duprecated)'
 import Home from './components/Home'
 import Add from './components/Add'
 import Report from './components/Report'
@@ -17,6 +18,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element = { <Home/>} />
+          {/* <Route path='/search' element = { <Home/>} /> */}
           <Route path='/add' element = { <Add/>} />
           <Route path='/report' element = { <Report/>} />
           <Route path='*' element = { <Error/>} />
