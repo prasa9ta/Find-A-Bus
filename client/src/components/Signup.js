@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Signup = () => {
 
   const nevigate = useNavigate();
-  const [toggleButton,setToggleButton] = useState(true);
+  const [toggleButton,setToggleButton] = useState(false);
   const [name,setName] = useState("");
   const [gender,setGender] = useState("");
   const [phone,setPhone] = useState("");
@@ -32,6 +32,7 @@ const Signup = () => {
       // Passwords do not match, provide feedback to the user
       window.alert("Passwords do not match!");
       console.error('Passwords do not match!');
+      return;
     }
 
     const res = await fetch('/register',{
@@ -57,6 +58,11 @@ const Signup = () => {
   const signinFormSubmit = async(event)=>{
     event.preventDefault();
 
+    if(!email || !password){
+      window.alert("fill all the details !");
+      return;
+    }
+
     const res = await fetch('/login',{
       method:"POST",
       headers:{
@@ -67,14 +73,12 @@ const Signup = () => {
       })
     });
     
-    const result = await res.json();
-    console.log(result);
-
-    if(res.status===200){
-      console.log("login successfull");
-      nevigate('/add');
+    const data = await res.json();
+    if(res.status===400 || !data){
+      console.log("error");
     }else{
-      console.log("login failed");
+      window.alert("login successfull");
+      nevigate('/');
     }
 
   };
@@ -136,7 +140,7 @@ const Signup = () => {
             </label>
             <button type="submit" onClick={signinFormSubmit}>Sign In</button>
         </form>
-        <p>Don't have an account? <button onClick={() => setToggleButton(false)} style={{background:"none", color:"blue",fontSize:"1.2rem", fontWeight:"600"}}>Sign Up</button></p>
+        <p>Don't have an account? <button onClick={() => setToggleButton(true)} style={{background:"none", color:"blue",fontSize:"1.2rem", fontWeight:"600"}}>Sign Up</button></p>
       </div>
       }
     </>

@@ -13,6 +13,6 @@ mongoose.connect(DB,{
     console.log(`mongodb-atlas connection successfull`);
 }).catch(
     (err)=>{
-        console.log('no connection');
+        console.log('error , no connection');
     }
 );

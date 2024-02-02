@@ -10,7 +10,7 @@ const busSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    route:[
+    route1:[
         {
             place:{
                 type:String,
@@ -20,6 +20,32 @@ const busSchema = new mongoose.Schema({
                 type:String,
                 required:true
             }
+        }
+    ],
+    route2:[
+        {
+            place:{
+                type:String,
+                required:true
+            },
+            time:{
+                type:String,
+                required:true
+            }
+        }
+    ],
+    running_days:[
+        {
+            day:{
+                type:String,
+                required:true
+            },
+            routes:[
+               {
+                    type:String,
+                    required:true
+                }
+            ]
         }
     ]
 });

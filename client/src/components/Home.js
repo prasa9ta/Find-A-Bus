@@ -11,6 +11,7 @@ const Home = () => {
   
   const PostData = async(e)=>{
     e.preventDefault();
+   
     const res = await fetch('/search',{
       method:"POST",
       headers:{
@@ -23,18 +24,19 @@ const Home = () => {
     
     const result = await res.json();
     
-    if(result.busses)
-    setResults([...result.busses]);
-    
-    
+
+    console.log(result);
+    if(result.results)
+    setResults(result.results);
+
     if(result.status === 422 || !result){
       window.alert("No Bus found");
-      console.log("No bus found");
+      console.log("No bus found ..from client");
     }else{
       // console.log(results);
       
       setTougleButton(false);
-      results.map((bus)=>console.log(bus.name));
+      results.map((bus)=>console.log(bus.busName));
     }
 
   }
@@ -48,11 +50,11 @@ const Home = () => {
           <div className='home-route'>
             <div className='home-route-search'>
               <div className='home-source'>
-                <input type='text' name='source' id='source' placeholder=' Source' value={source} onChange={(event)=>setSource(event.target.value)}></input>
+                <input type='text' name='source' id='source' placeholder=' Source' value={source} onChange={(event)=>{setSource(event.target.value.toUpperCase());setTougleButton(true);}}></input>
               </div>
               <div className='source-to-destination'><p>TO</p></div>
               <div className='home-destination'>
-                <input type='text' name='destination' id='destination' placeholder=' Destination' value={destination} onChange={(event)=>setDestination(event.target.value)}></input>
+                <input type='text' name='destination' id='destination' placeholder=' Destination' value={destination} onChange={(event)=>{setDestination(event.target.value.toUpperCase());setTougleButton(true);}}></input>
               </div>
             </div>
           </div>

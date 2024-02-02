@@ -1,0 +1,23 @@
+{
+    "name": "XXXX",
+    "number": "WB 01 A 0090",
+    "route1": [
+      { "place": "Ranibandh", "time": "10:00"},
+      {"place":"Khatra", "time":"10:30"},
+      {"place":"Hatirampur", "time":"11:20"}
+    ],
+    "route2": [
+      { "place": "Hatirampur", "time": "12:00"},
+      {"place":"Khatra", "time":"12:40"},
+      {"place":"Ranibandh", "time":"13:20"}
+    ],
+    "running_days":[
+      {"day":"sunday","routes":["route1","route2"]},
+      {"day":"monday","routes":["route1","route2"]},
+      {"day":"tuesday","routes":["route1","route2"]},
+      {"day":"wednesday","routes":["route1","route2"]},
+      {"day":"thursday","routes":["route1","route2"]},
+      {"day":"friday","routes":["route1","route2"]},
+      {"day":"saterday","routes":["route1","route2"]}    
+    ]
+  }

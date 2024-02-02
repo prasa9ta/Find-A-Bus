@@ -1,163 +1,231 @@
-import React,{useState,useEffect} from 'react'
-
-
-// const routes = [{}];
-var Bus;
+import React, { useState } from 'react';
 
 const Add = () => {
+    const [busName, setBusName] = useState('');
+    const [busNumber, setBusNumber] = useState('');
+    const [route1, setRoute1] = useState([]);
+    const [route2, setRoute2] = useState([]);
+    const [runningDays, setRunningDays] = useState([]);
+    const [tougleButton, setTougleButton] = useState(true);
+    const [tougleButton1, setTougleButton1] = useState(true);
+    const [tougleButton2, setTougleButton2] = useState(true);
+    const [tougleButton3, setTougleButton3] = useState(true);
 
-    // add 
-    // const [route,setRoute] = useState([{}]);
-    const [busName,setBusName] = useState("");
-    const [busNo,setBusNo] = useState("");
-    const [stopage, setInputstopage] = useState([]);
-    const [place,setPlace] = useState("");
-    const [time, setTime] = useState("");
-    const [tougleButton,setTougleButton] = useState(true);
+    const handleAddRoute1 = () => {
+        // Handle adding a new stop to route1
+        // For simplicity, assume place and time are input via separate input fields
+        const newStop = {
+            place: document.getElementById('route1-place').value,
+            time: document.getElementById('route1-time').value,
+        };
 
+        setRoute1([...route1, newStop]);
+    };
 
-    // proceed 
+    const handleAddRoute2 = () => {
+        // Handle adding a new stop to route2
+        // For simplicity, assume place and time are input via separate input fields
+        const newStop = {
+            place: document.getElementById('route2-place').value,
+            time: document.getElementById('route2-time').value,
+        };
 
-    const proceed = ()=>{
-        if(!busName || !busNo){
-            alert("pleace fill Both the Fields.");
-            setTougleButton(true);
-        }else{
-            Bus = {
-                name:busName,
-                number:busNo
+        setRoute2([...route2, newStop]);
+    };
+
+    // const handleAddRunningDay = () => {
+    //     // Handle adding a new running day
+    //     // For simplicity, assume day and routes are input via separate input fields
+    //     // setTougleButton3(false);
+    //     const newRunningDay = {
+    //         day: document.getElementById('running-day').value,
+    //         routes: document.getElementById('running-day-routes').value.split(',').map(route => route.trim()),
+    //     };
+
+    //     setRunningDays([...runningDays, newRunningDay]);
+    // };
+
+    function handleAddRunningDay() {
+        setTougleButton3(false);
+        const selectedDays = [];
+
+        // Array of all possible days
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saterday'];
+
+        // Iterate through each day
+        days.forEach((day) => {
+            const dayRoutes = [];
+
+            // Find all checked checkboxes for the current day
+            const checkboxes = document.querySelectorAll(`input[name="${day}"]:checked`);
+
+            // Push the value (route) of each checked checkbox into dayRoutes
+            checkboxes.forEach((checkbox) => {
+                dayRoutes.push(checkbox.value);
+            });
+
+            // If there are selected routes for the day, add it to selectedDays array
+            if (dayRoutes.length > 0) {
+                selectedDays.push({ day, routes: dayRoutes });
             }
-
-            setTougleButton(false);
-        }
-    }
-
-
-
-    // add a route
-
-    const addRoute = ()=>{
-        if(!place || !time){ // one of the field is empty
-            alert("Please enter both Stopage and Time !");
-        }
-        else if(stopage.find((elem)=>{ return elem.time===time})){ // time repeating is there 
-            alert("Bus can't be at two places at a same time ");
-        }
-        else{ //times are unique
-            const newStopege = {
-                place: place,
-                time : time
-            }
-            setInputstopage([...stopage,newStopege]);
-        }
-        setPlace("");
-        setTime("");
-    }
-   
-    // console.log(stopage);
-
-
-
-    // editStopage
-
-    const editStopage = (curElem)=>{
-        setPlace(curElem.place);
-        setTime(curElem.time);
-
-    }
-
-
-    // final submit
-    const finalSubmit = async(e)=>{
-
-        Bus.route = stopage;
-        console.log(stopage);
-        setBusName("");
-        setBusNo("");
-        //fix tougleButton
-        setTougleButton("true");
-        console.log(tougleButton);
-
-
-        e.preventDefault();
-        const res = await fetch('/addbus',{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify({
-            name:busName,number:busNo,route:stopage
-          })
         });
 
+        // Do something with the selectedDays array, for example, log it to the console
+        console.log(selectedDays);
+        setRunningDays(selectedDays);
+    };
 
-        const result = await res.json();
-        
-        
-        if(result.status === 422 || !result){
-          window.alert("cant do that");
-          console.log("cant do that");
-        }else{
-            console.log("added successfully");
+    const handleAddBus = async () => {
+        try {
+            // Perform validation before sending the request
+            // You might want to add more validation checks
 
+            const response = await fetch('/addbus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: busName,
+                    number: busNumber,
+                    route1,
+                    route2,
+                    running_days: runningDays,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.message) {
+                alert(result.message);
+                // Optionally, reset form fields after successful addition
+                setBusName('');
+                setBusNumber('');
+                setRoute1([]);
+                setRoute2([]);
+                setRunningDays([]);
+            } else {
+                alert('Failed to add bus. Please check the console for errors.');
+            }
+        } catch (error) {
+            console.error('Error adding bus:', error);
+            alert('An error occurred while adding the bus.');
         }
-    }
+    };
 
-    // adding to local storage
-
-  useEffect(()=>{
-    localStorage.setItem("route",JSON.stringify(stopage))
-  },[stopage]);
-
-// 
-
-    return( 
-        <>  
-            <div className='add-container'>
-                {   tougleButton?
-                <div className='add-bus-name-time'>
-                    <div>
-                        <label htmlFor="bus-name">Bus Name : </label>
-                        <input type='text' name='bus-name' id='bus-name' placeholder='Enter Bus Name' value={busName} onChange={(event)=>setBusName(event.target.value)}/>
-                    </div>
-                    <div>
-                        <label htmlFor="bus-number">Bus Number :  </label>
-                        <input type="text" name='bus-number' id='bus-number' placeholder='XX 00 X 1234' value={busNo} onChange={(event)=>setBusNo(event.target.value)} />
-                    </div>
-                    <button className='btn' onClick={proceed}>Proceed</button>
-                </div>:
-                <div className='timetable'>
-                    <div className="routes">
-                        <div className='routes-child'>
-                            <label htmlFor="stopage">Stopage : </label>
-                            <input type="text" name='place' id='stopage' placeholder='stopage' value={place} onChange={(event) => setPlace(event.target.value)}/>
-                        </div>
-                        <div className='routes-child'>
-                            <label htmlFor="stopage-time">Time : </label>
-                            <input type="time" name='stopage-time' id='stopage-time' value={time} onChange={(event) => setTime(event.target.value)}/>
-                        </div>
-                        <button className='btn add routes-child' onClick={addRoute}>+</button>
-                    </div>
-
-                    {/* show stopages with time tag need to modify later IT IS NOT WORKING */}
-                    <div className="stopages-with-time">
-                        {
-                        stopage.map((curElem)=>{
-                            return(
-                                <div className="each-stop" id='each-stop' onClick={()=>{editStopage(curElem)}}>
-                                    <span> {curElem.place}</span>
-                                    <span>{curElem.time}</span>
-                            </div>
-                            )
-                        })
-                        }
-                    </div>
-                    <button className='btn submit' onClick={finalSubmit} >Submit</button>
+    return (
+        <div>
+            <h2>Add Bus</h2>
+            {tougleButton ?
+                <div>
+                    <label>Bus Name: বাস<input type="text" value={busName} onChange={(e) => setBusName(e.target.value)} /></label><br />
+                    <label>Bus Number: <input type="text" value={busNumber} onChange={(e) => setBusNumber(e.target.value)} /></label><br />
+                    <button onClick={() => setTougleButton(false)}>proceed</button>
                 </div>
-                }
-            </div>
-        </>
-    )
-}
+                :
+                <div>
+                    {tougleButton1 ?
+                        <div>
+                            <h3>Route 1</h3>
+                            <label>Place: <input type="text" id="route1-place" /></label>
+                            <label>Time: <input type="text" id="route1-time" /></label>
+                            <button onClick={handleAddRoute1}>Add Stop</button>
+                            <ul>
+                                {route1.map((stop, index) => (
+                                    <li key={index}>{stop.place} - {stop.time}</li>
+                                ))}
+                            </ul>
+                            <button onClick={() => setTougleButton1(false)}>proceed</button>
+                        </div>
+                        :
+                        <div>
+                            {tougleButton2 ?
+                                <div>
 
-export default Add
+                                    <h3>Route 2</h3>
+                                    <label>Place: <input type="text" id="route2-place" /></label>
+                                    <label>Time: <input type="text" id="route2-time" /></label>
+                                    <button onClick={handleAddRoute2}>Add Stop</button>
+                                    <ul>
+                                        {route2.map((stop, index) => (
+                                            <li key={index}>{stop.place} - {stop.time}</li>
+                                        ))}
+                                    </ul>
+                                    <button onClick={() => setTougleButton2(false)}>proceed</button>
+                                </div>
+                                :
+                                <div>
+                                    {tougleButton3 ?
+                                        <div>
+
+                                            <h3>Running Days</h3>
+
+                                            <h3>Choose Bus Running on Sunday</h3>
+                                            <label>
+                                                <input type="checkbox" name="sunday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="sunday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Monday</h3>
+                                            <label>
+                                                <input type="checkbox" name="monday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="monday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Tuesday</h3>
+                                            <label>
+                                                <input type="checkbox" name="tuesday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="tuesday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Wednesday</h3>
+                                            <label>
+                                                <input type="checkbox" name="wednesday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="wednesday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Thursday</h3>
+                                            <label>
+                                                <input type="checkbox" name="thursday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="thursday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Friday</h3>
+                                            <label>
+                                                <input type="checkbox" name="friday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="friday" value="route2" /> Route 2
+                                            </label>
+
+                                            <h3>Choose Bus Running on Saterday</h3>
+                                            <label>
+                                                <input type="checkbox" name="saterday" value="route1" /> Route 1
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="saterday" value="route2" /> Route 2
+                                            </label>
+                                            <button onClick={handleAddRunningDay}>Proceed</button>
+                                        </div>
+                                        :
+                                        <div>
+                                            <button onClick={handleAddBus}>Add B</button>
+                                        </div>}
+                                </div>}
+                        </div>}
+                </div>}
+        </div>
+    );
+};
+
+export default Add;

@@ -31,7 +31,7 @@ app.get('/',(req,res)=>{
     res.send(`hello gandu`);
 });
 
-app.get('/about',middleware,(req,res)=>{
+app.get('/about',(req,res)=>{
     res.send("hello this is about page");
 });
 
